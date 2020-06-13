@@ -34,15 +34,35 @@ const ButtonGroup = styled.div`
     justify-content: flex-end;
 `;
 
-function Dialog({ title, children, confirmText, cancelText }) {
+// styled-components로 컴포넌트의 스타일을 특정 상황에서 덮어쓸 수 있다.
+const ShortMarginButton = styled(Button)`
+  & + & {
+    margin-left: 0.5rem;
+  }
+`;
+
+function Dialog({ 
+    title, 
+    children, 
+    confirmText, 
+    cancelText,
+    onConfirm,
+    onCancel,
+    visible
+}) {
+    if (visible === false) return null;
     return (
         <DarkBackground>
             <DialogBlock>
                 <h3>{title}</h3>
                 <p>{children}</p>
                 <ButtonGroup>
-                    <Button color="gray">{cancelText}</Button>
-                    <Button color="pink">{confirmText}</Button>
+                    <ShortMarginButton color="gray" onClick={onCancel}>
+                        {cancelText}
+                    </ShortMarginButton>
+                    <ShortMarginButton color="pink" onClick={onConfirm}>
+                        {confirmText}
+                    </ShortMarginButton>
                 </ButtonGroup>
             </DialogBlock>
         </DarkBackground>
